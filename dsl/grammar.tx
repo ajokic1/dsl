@@ -1,0 +1,43 @@
+Program
+    : rules *= Rule[';']
+    ;
+
+Rule
+    : StructureFormatRule
+    | OperatorRuleFormat
+    ;
+
+StructureFormatRule
+    :caption=ID ":" (block_elem=Block)?
+                         formats*=Format[";"]
+    ;
+
+OperatorRuleFormat
+    : "operators" operators*=Operators[','] ":" "spacing" ":" spacing=INT
+    ;
+
+
+Block
+    : "block" ":"
+        (boundaries=Boundaries_format)?
+      (begin=Begin_mark_format)?
+      (end=End_mark_format)?
+      (indent=Indent_format)?
+      ";"
+    ;
+
+Boundaries_format : "boundaries"  ":" bound=Boundaries;
+Begin_mark_format : "begin" ":" begin=Begin_mark;
+End_mark_format: "end" ":" end=End_mark;
+Indent_format: "indent" ":" indent_num=INT;
+
+
+
+
+Format : "format" ":" structure_format=STRING;
+Boundaries : "parentheses" | "indentation" | "end";
+
+Begin_mark : "{" | "(" | "[";
+End_mark: "}" | ")" | "[";
+
+Operators : "+"|"-"|"*"|"/"|"<="|"<"|">"|">="|"!="|"++"|"--"|"==";
