@@ -9,5 +9,6 @@ global:
     ;
 structure_if
     : format : "if a>b a++"
-
-
+;
+operators +, -, * :
+    spacing : 5

@@ -3,10 +3,18 @@ Program
     ;
 
 Rule
-    : caption=ID ":" (block_elem=Block)?
+    : StructureFormatRule
+    | OperatorRuleFormat
+    ;
+
+StructureFormatRule
+    :caption=ID ":" (block_elem=Block)?
                          formats*=Format[";"]
     ;
 
+OperatorRuleFormat
+    : "operators" operators*=Operators[','] ":" "spacing" ":" spacing=INT
+    ;
 
 
 Block
@@ -31,3 +39,5 @@ Boundaries : "parentheses" | "indentation" | "end";
 
 Begin_mark : "{" | "(" | "[";
 End_mark: "}" | ")" | "[";
+
+Operators : "+"|"-"|"*"|"/"|"<="|"<"|">"|">="|"!="|"++"|"--"|"==";
