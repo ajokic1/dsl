@@ -1,0 +1,13 @@
+global:
+    block: boundaries: parentheses
+           begin : {
+           end: }
+           indent : 2
+    ;
+    format : "bla truc bla";
+    format : "dshfeu"
+    ;
+structure_if
+    : format : "if a>b a++"
+
+

@@ -1,0 +1,105 @@
+Program
+    : rules *= Rules[';']
+    ;
+
+Rules
+    : caption=ID ":" ("block" ":" block_elem=Block)? ";"
+                         formats*=Format[";"] ";"
+                         (arguments : arguments=ArgumentFormat)?
+    ;
+
+
+
+Block
+    : "boundaries" : boundaries?=Boundaries
+      "begin" : begin?=Begin_mark
+      "end" : end?=End_mark
+      "indent" : indent?=INT)?
+    ;
+
+Format : "format" : structure_format=StructureFormat;
+
+
+StructureFormat
+    :  IfFormat
+    | ElseFormat
+    | ForFormat
+    | ClassFormat
+    | FunctionFormat
+    ;
+
+IfFormat
+    : "if" "(" Log_exp ")" Body
+    ;
+
+
+ElseFormat
+    : "else" Body
+    ;
+
+ForFormat
+    : "for" "(" Cond_exp ")" Body
+    ;
+
+Cond_exp
+    : Exp ";" Exp ";" Exp ";"
+    | ID ":" ID ":" ID
+    ;
+
+FunctionFormat
+    : ID "("args*=Arguments[,]")" BlockStatement
+    ;
+
+Argument
+    : type=ID name=ID;
+
+ClassFormat
+    : "class" ID BlockStatement
+    ;
+
+Body
+    : Statement
+    | BlockStatement
+    ;
+
+Statement
+    :
+    ;
+
+Num_exp
+    : Exp
+    |
+Exp
+    : ID
+    | NUMBER
+    ;
+
+BlockStatement
+    : "{" statements+=Statement[;] "}"
+    ;
+
+Log_exp
+    : INT Log_op INT
+    | ID Log_op INT
+    | INT Log_op ID
+    | ID Log_op ID
+    ;
+
+Log_op : "<" | ">" | ">=" | "<=" | "==" | "!=";
+
+
+
+
+ArgumentFormat
+    : "delimiter" ":"  delimiter=Delimiter "spacing": place=PlaceSpacing "spacing num" : spacing=NUMBER
+    ;
+
+
+Delimiter : ","| ":"|";";
+
+PlaceSpacing : "afterDelimiter" | "beforeDelimiter";
+
+Boundaries : "parentheses" | "indentation" | end;
+
+Begin_mark : "{" | "(" | "[";
+End_mark: "}" | ")" | "[";
