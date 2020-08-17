@@ -12,10 +12,14 @@ def showDataFromModel(model):
         if r.__class__.__name__ == "StructureFormatRule":
             print("Rule caption: " + r.caption)
             if r.block_elem != None:
-                print("Boundaries: " + r.block_elem.boundaries.bound)
-                print("Begin mark: " + r.block_elem.begin.begin)
-                print("End mark: " + r.block_elem.end.end)
-                print("Indent: " + str(r.block_elem.indent.indent_num))
+                if r.block_elem.boundaries != None:
+                    print("Boundaries: " + r.block_elem.boundaries.bound)
+                if r.block_elem.begin != None:
+                    print("Begin mark: " + r.block_elem.begin.begin)
+                if r.block_elem.end != None:
+                    print("End mark: " + r.block_elem.end.end)
+                if r.block_elem.indent != None:
+                    print("Indent: " + str(r.block_elem.indent.indent_num))
 
             for f in r.formats:
                 print("Structure format is: " + f.structure_format)
