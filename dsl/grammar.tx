@@ -16,7 +16,6 @@ OperatorRuleFormat
     : "operators" operators*=Operators[','] ":" "spacing" ":" spacing=INT
     ;
 
-
 Block
     : "block" ":"
         (boundaries=Boundaries_format)?
@@ -31,10 +30,7 @@ Begin_mark_format : "begin" ":" begin=Begin_mark;
 End_mark_format: "end" ":" end=End_mark;
 Indent_format: "indent" ":" indent_num=INT;
 
-
-
-
-Format : "format" ":" structure_format=STRING;
+Format : "format" ":"  "MainStructure" ":" main_structure=STRING ";" "HelperStructures" ":" helper_structures=STRING ";";
 Boundaries : "parentheses" | "indentation" | "end";
 
 Begin_mark : "{" | "(" | "[";
