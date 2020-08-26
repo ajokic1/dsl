@@ -4,11 +4,14 @@ global:
            end: }
            indent : 2
     ;
-    format : "bla truc bla";
-    format : "dshfeu"
+    format :
+        MainStructure:
+            "If: 'if' '(' Exp RelOp Exp ')' '{' '}' ;" ;
+        HelperStructures: "
+            Exp: ID | INT ;
+            RelOp : '<' | '>' | '<=' | '>=' | '==' | '!=' ;
+        " ;
     ;
-structure_if
-    : format : "if a>b a++"
-;
+
 operators +, -, * :
     spacing : 5
