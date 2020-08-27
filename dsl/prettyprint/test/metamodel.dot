@@ -1,0 +1,29 @@
+
+    digraph textX {
+    fontname = "Bitstream Vera Sans"
+    fontsize = 8
+    node[
+        shape=record,
+        style=filled,
+        fillcolor=aliceblue
+    ]
+    nodesep = 0.3
+    edge[dir=black,arrowtail=empty]
+
+
+94020295987744[ label="{Program|}"]
+
+94020295971136[ label="{*Child|}"]
+
+94020296150176[ label="{Block|block_header: STRING\l}"]
+
+94020296156896[ label="{Statement|text: STRING\l}"]
+
+
+
+94020295987744 -> 94020295971136[arrowtail=diamond, dir=both, headlabel="children 0..*"]
+94020295971136 -> 94020296150176 [dir=back]
+94020295971136 -> 94020296156896 [dir=back]
+94020296150176 -> 94020295971136[arrowtail=diamond, dir=both, headlabel="children 0..*"]
+
+}

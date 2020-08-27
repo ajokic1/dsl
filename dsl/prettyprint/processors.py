@@ -26,6 +26,8 @@ def structure_header(config, node):
 
 
 def block(config, node):
+    config.printer.new_line_indent() #remove
+    value(config, node.block_header) #remove
     config.printer.append(config.rules['block_start'])
     config.printer.increase_indent()
     process_children(config, node.children)
@@ -37,7 +39,8 @@ def block(config, node):
 
 def statement(config, node):
     config.printer.new_line_indent()
-    process_children(config, node.children)
+    #process_children(config, node.children)
+    value(config, node.text) #remove
     if config.rules['statement_end']:
         config.printer.append(config.rules['statement_end'])
 
