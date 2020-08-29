@@ -1,17 +1,19 @@
 from .printer import Printer
 from .processors import *
+from .rules import Rules
 
 PRIMITIVE_TYPES = ['bool', 'int', 'long', 'float', 'str']
 
 DEFAULT_RULES = {
-    'statement_end': '',
-    'block_start': '{',
-    'block_end': '}',
-    'use_spaces': True,
-    'tab_width': 4,
-    'structures': {},
-    'no_spacing_operators': ['++', '--'],
+    Rules.STATEMENT_END: '',
+    Rules.BLOCK_START: '{',
+    Rules.BLOCK_END: '}',
+    Rules.USE_SPACES: True,
+    Rules.TAB_WIDTH: 4,
+    Rules.STRUCTURES: {},
+    Rules.NO_SPACING_OPERATORS: ['++', '--'],
 }
+
 
 class Configuration:
     def __init__(self, rules=None):
@@ -23,8 +25,7 @@ class Configuration:
         self._map_processors_to_classes()
 
     def get_structure_rules(self, structure_name):
-        return self.rules['structures'][structure_name]
-
+        return self.rules[Rules.STRUCTURES][structure_name]
 
     def _map_processors_to_classes(self):
         self.class_processor_mapping.update(dict.fromkeys(self._get_list_of_structures(), structure))
@@ -37,6 +38,5 @@ class Configuration:
             'Block': block,
         })
 
-
     def _get_list_of_structures(self):
-        return self.rules['structures'].keys()
+        return self.rules[Rules.STRUCTURES].keys()

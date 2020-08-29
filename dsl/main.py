@@ -1,5 +1,6 @@
 from textx import metamodel_from_file, metamodel_for_language
 from textx import metamodel_from_str
+from dsl.prettyprint import get_rules_from_model
 import re
 
 
@@ -53,8 +54,15 @@ def process_format_rule(f):
     print(format_model.matches)
     print('------------------')
 
+
+def prettyprint(rules_model):
+    rules = get_rules_from_model(rules_model)
+    # TODO: pprint model of code
+
+
 if __name__ == '__main__':
     path = 'example.txt'
     model = create_model(path)
+    prettyprint(model)
     showDataFromModel(model)
 
