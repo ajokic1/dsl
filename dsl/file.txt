@@ -1,18 +1,9 @@
-asdasd
-sads
-if (a > 1) {
-
+a=5;
+if (a == 1) {
+    a = 3;
 }
+
 if (a > 2) {
-
+    a--;
+    b = a + 5;
 }
-if (a > 3) {
-
-}
-asdsad
-asds
-
-if (a > 4) {
-
-}
-asd

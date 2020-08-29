@@ -1,12 +1,12 @@
-from textx import metamodel_from_file, metamodel_for_language
-from textx import metamodel_from_str
-import re
+from textx import metamodel_from_file
+from textx.export import model_export
 
 
 def create_model(path):
     metamodel = metamodel_from_file('grammar.tx')
     model = metamodel.model_from_file(path)
     return model
+
 
 def showDataFromModel(model):
     rules = model.rules
@@ -23,9 +23,7 @@ def showDataFromModel(model):
                 if r.block_elem.indent != None:
                     print("Indent: " + str(r.block_elem.indent.indent_num))
 
-            for f in r.formats:
-                process_format_rule(f)
-
+            process_format_rules(r.formats)
         elif r.__class__.__name__ == "OperatorRuleFormat":
             print("Operators :")
             for o in r.operators:
@@ -33,28 +31,35 @@ def showDataFromModel(model):
             print("Operator spacing: " + str(r.spacing))
 
 
-def process_format_rule(f):
-    before_rule = 'Before: /(?ms).*?(?=if)/ ;'
-    after_rule = 'After: /(?ms)(?!if).*?(?=if)/| /(?ms)(?!if).*(?=if)?/| \'\' ;'
+def process_format_rules(formats):
+    structure_rules = 'Structure\n\t:'
+    helper_rules = []
+    for f in formats:
+        structure_rules += f.main_structure[len(f.main_structure.split(':')[0]) + 1:len(
+        f.main_structure) - 1] + '\n\t|'
+        helper_rules.append(f.helper_structures)
+    structure_rules = structure_rules[0:len(structure_rules)-1] + ';'
+    save_rules_in_file(structure_rules, helper_rules)
 
-    main_struct_name = f.main_structure.split(':')[0]
-    main_struct = main_struct_name + ':Before?-' + f.main_structure[len(main_struct_name) + 1:len(
-        f.main_structure) - 1] + 'After?-;'
-    match_rule = 'Match: matches*=' + main_struct_name + '[\'\'];'
-    helper_rules = re.sub(r"[\t\n]*", "", f.helper_structures)
 
-    with open(main_struct_name + 'Format.tx', 'w') as f:
-        f.write(match_rule + '\n' + main_struct + '\n' + before_rule + '\n' + after_rule + '\n' + helper_rules.strip())
+def save_rules_in_file(structure_rules, helper_rules):
+    with open('user_grammar.tx', 'w') as user_grammar_file:
+        basic_grammar_rules = get_predefined_rules()
+        user_grammar_file.write(basic_grammar_rules + '\n\n' + structure_rules)
+        for r in helper_rules:
+            user_grammar_file.write('\n\n' + r)
 
-    # extract structures to be formatted (format_model.matches)
-    format_metamodel = metamodel_from_file(main_struct_name + 'Format.tx')
-    format_model = format_metamodel.model_from_file('file.txt')
-    print('------------------')
-    print(format_model.matches)
-    print('------------------')
+
+def get_predefined_rules():
+    with open('basic_grammar.tx', 'r') as f:
+        return f.read()
+
 
 if __name__ == '__main__':
     path = 'example.txt'
     model = create_model(path)
     showDataFromModel(model)
 
+    format_metamodel = metamodel_from_file('user_grammar.tx')
+    format_model = format_metamodel.model_from_file('file.txt')
+    model_export(format_model, 'model.dot')

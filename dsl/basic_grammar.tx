@@ -1,0 +1,37 @@
+Block
+	: statements*=Statement
+	;
+
+Statement
+	: structure=Structure
+	| exp=Exp
+	;
+
+Exp
+    : exp=AssigmentExp
+	| exp=ComplexExp
+	| exp=ExpParts
+	;
+
+AssigmentExp
+    : ID '=' ComplexExp ';'?
+    | ID '=' ExpParts ';'?
+    ;
+
+ComplexExp
+    : ExpParts Op ExpParts ';'?
+    ;
+
+ExpParts
+    : ID IncrementOp ';'?
+    | ID DecrementOp ';'?
+    | ID
+    | NUMBER
+    | STRING
+    ;
+
+Op: '<' | '>' | '<=' | '>=' | '==' | '!=' | '+' | '-' | '*' | '/';
+
+IncrementOp: '++' ;
+
+DecrementOp: '--' ;

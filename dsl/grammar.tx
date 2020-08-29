@@ -30,7 +30,8 @@ Begin_mark_format : "begin" ":" begin=Begin_mark;
 End_mark_format: "end" ":" end=End_mark;
 Indent_format: "indent" ":" indent_num=INT;
 
-Format : "format" ":"  "MainStructure" ":" main_structure=STRING ";" "HelperStructures" ":" helper_structures=STRING ";";
+Format : "format" ":"  "MainStructure" ":" main_structure=STRING ";" ("HelperStructures" ":" helper_structures=STRING ";
+")?;
 Boundaries : "parentheses" | "indentation" | "end";
 
 Begin_mark : "{" | "(" | "[";
