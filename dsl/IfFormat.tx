@@ -1,0 +1,5 @@
+Match: matches*=If[''];
+If:Before?- 'if' '(' Exp RelOp Exp ')' '{' '}' After?-;
+Before: /(?ms).*?(?=if)/ ;
+After: /(?ms)(?!if).*?(?=if)/| /(?ms)(?!if).*(?=if)?/| '' ;
+Exp: ID | INT ;            RelOp : '<' | '>' | '<=' | '>=' | '==' | '!=' ;

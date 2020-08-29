@@ -1,8 +1,12 @@
+<<<<<<< HEAD
+from textx import metamodel_from_file
+from textx.export import model_export
+=======
 from textx import metamodel_from_file, metamodel_for_language
 from textx import metamodel_from_str
 from dsl.prettyprint import get_rules_from_model
 import re
-from textx.export import model_export
+>>>>>>> feature/pprint
 
 
 def create_model(path):

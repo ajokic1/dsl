@@ -1,0 +1,15 @@
+Program:
+    children*= Child
+;
+
+Child:
+    Block | Statement
+;
+
+Block:
+    block_header=/[^{};]*/ '{' children*= Child '}'
+;
+
+Statement:
+    text=/[^{};]*;/
+;
