@@ -1,6 +1,6 @@
-from textx import metamodel_from_file, metamodel_for_language
+from textx import metamodel_from_file, metamodel_for_language, get_children_of_type, get_children
 from textx import metamodel_from_str
-from dsl.prettyprint import get_rules_from_model
+from dsl.prettyprint import get_rules_from_model, pprint_to_string
 import re
 from textx.export import model_export
 
@@ -58,18 +58,25 @@ def get_predefined_rules():
         return f.read()
 
 
+def selector(obj):
+    return True
 
-def prettyprint(rules_model):
+
+def prettyprint(rules_model, code_model):
     rules = get_rules_from_model(rules_model)
-    # TODO: pprint model of code
+    result = pprint_to_string(code_model, rules)
+    print(result)
+    # structure = code_model.statements[3].statement
+    # print(vars(structure))
 
 
 if __name__ == '__main__':
     path = 'example.txt'
     model = create_model(path)
-    prettyprint(model)
     showDataFromModel(model)
 
     format_metamodel = metamodel_from_file('user_grammar.tx')
     format_model = format_metamodel.model_from_file('file.txt')
     model_export(format_model, 'model.dot')
+
+    prettyprint(model, format_model)

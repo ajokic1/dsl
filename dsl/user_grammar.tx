@@ -40,3 +40,8 @@ Op: op='<' | op='>' | op='<=' | op='>=' | op='==' | op='!=' | op='+' | op='-' | 
 
 IncrementOp: '++' ;
 DecrementOp: '--' ;
+
+Structure
+	: key_word='if' cond_open='(' cond=Exp cond_close=')' '{' block=Block '}' 
+	;
+

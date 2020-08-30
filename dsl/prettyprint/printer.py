@@ -1,9 +1,12 @@
+from .rules import Rules
+
+
 class Printer:
     def __init__(self, config):
         self.result = ""
         self._indent_level = 0
-        self._tab_width = config.rules['tab_width']
-        self._use_spaces = config.rules['use_spaces']
+        self._tab_width = config.rules[Rules.TAB_WIDTH]
+        self._use_spaces = config.rules[Rules.USE_SPACES]
 
     def new_line_indent(self, num_tabs=1):
         self.append("\n" + self._spaces(num_tabs))

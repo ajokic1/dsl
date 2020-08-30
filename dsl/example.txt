@@ -6,7 +6,7 @@ global:
     ;
     format :
         MainStructure:
-            "If: key_word='if' cond_open='(' cond=Exp cond_close=')' block_open='{' block=Block block_close='}' ;"
+            "If: key_word='if' cond_open='(' cond=Exp cond_close=')' '{' block=Block '}' ;"
         ;
     ;
 

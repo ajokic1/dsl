@@ -31,11 +31,13 @@ class Configuration:
         self.class_processor_mapping.update(dict.fromkeys(self._get_list_of_structures(), structure))
         self.class_processor_mapping.update(dict.fromkeys(PRIMITIVE_TYPES, value))
         self.class_processor_mapping.update({
-            'Program': program,
-            'Expression': expression,
+            'ComplexExp': expression,
+            'AssignmentExp': expression,
             'Statement': statement,
-            'Operator': operator,
+            'Op': operator,
+            'AssignmentOp': operator,
             'Block': block,
+            'Structure': structure,
         })
 
     def _get_list_of_structures(self):

@@ -1,4 +1,6 @@
 a=5;
+asdfasdf()sdfas;
+import java.io.*;
 if (a == 1) {
     a = 3;
 }
