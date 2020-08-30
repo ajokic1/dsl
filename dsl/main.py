@@ -13,6 +13,8 @@ def create_model(path):
 
 def showDataFromModel(model):
     rules = model.rules
+    formats = []
+    operators = {'spacing': [], 'no_spacing': []}
     for r in rules:
         if r.__class__.__name__ == "StructureFormatRule":
             print("Rule caption: " + r.caption)
@@ -26,23 +28,45 @@ def showDataFromModel(model):
                 if r.block_elem.indent != None:
                     print("Indent: " + str(r.block_elem.indent.indent_num))
 
-            process_format_rules(r.formats)
+            formats += r.formats
         elif r.__class__.__name__ == "OperatorRuleFormat":
+            if r.spacing:
+                operators['spacing'] += r.operators
+            else:
+                operators['no_spacing'] += r.operators
             print("Operators :")
             for o in r.operators:
                 print(o)
             print("Operator spacing: " + str(r.spacing))
+    process_rules(formats, operators)
 
 
-def process_format_rules(formats):
+def process_rules(formats, operators):
     structure_rules = 'Structure\n\t:'
     helper_rules = []
     for f in formats:
         structure_rules += f.main_structure[len(f.main_structure.split(':')[0]) + 1:len(
-        f.main_structure) - 1] + '\n\t|'
+            f.main_structure) - 1] + '\n\t|'
         helper_rules.append(f.helper_structures)
-    structure_rules = structure_rules[0:len(structure_rules)-1] + ';'
+    structure_rules = structure_rules[0:len(structure_rules) - 1] + ';'
+    operator_rules = process_operator_rules(operators)
+    helper_rules += operator_rules
     save_rules_in_file(structure_rules, helper_rules)
+
+
+def process_operator_rules(operators):
+    operator_rules = [generate_operator_rule('Op', operators['spacing']),
+                      generate_operator_rule('UnaryOp', operators['no_spacing'])]
+    return operator_rules
+
+
+def generate_operator_rule(classname, operators):
+    rule = classname + ': '
+    for op in operators:
+        rule += 'op=\'' + op + '\'' + '|'
+    rule = rule.rstrip('|')
+    rule += ';'
+    return rule
 
 
 def save_rules_in_file(structure_rules, helper_rules):

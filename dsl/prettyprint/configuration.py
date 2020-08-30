@@ -33,8 +33,10 @@ class Configuration:
         self.class_processor_mapping.update({
             'ComplexExp': expression,
             'AssignmentExp': expression,
+            'UnaryExp': expression,
             'Statement': statement,
             'Op': operator,
+            'UnaryOp': nospacing_operator,
             'AssignmentOp': operator,
             'Block': block,
             'Structure': structure,

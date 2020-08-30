@@ -10,22 +10,25 @@ Statement
 
 UnknownStatement
     : /.*;/
-;
+    ;
 
 Exp
-    : ID IncrementOp ';'?
-    | ID DecrementOp ';'?
+    : UnaryExp
     | AssignmentExp
 	| ComplexExp
-	;
+    ;
+
+UnaryExp
+    : part=ID part=UnaryOp part=';'?
+    ;
 
 AssignmentExp
-    : part=ID part=AssignmentOp part=ComplexExp ';'?
-    | part=ID part=AssignmentOp part=ExpParts ';'?
+    : part=ID part=AssignmentOp part=ComplexExp part=';'?
+    | part=ID part=AssignmentOp part=ExpParts part=';'?
     ;
 
 ComplexExp
-    : part=ExpParts part=Op part=ExpParts ';'?
+    : part=ExpParts part=Op part=ExpParts part=';'?
     ;
 
 ExpParts
@@ -36,12 +39,14 @@ ExpParts
 
 AssignmentOp: op='=' | op='+=' | op='-=';
 
-Op: op='<' | op='>' | op='<=' | op='>=' | op='==' | op='!=' | op='+' | op='-' | op='*' | op='/';
 
-IncrementOp: '++' ;
-DecrementOp: '--' ;
 
 Structure
 	: key_word='if' cond_open='(' cond=Exp cond_close=')' '{' block=Block '}' 
 	;
 
+
+
+Op: op='<'|op='>'|op='<='|op='>='|op='=='|op='!='|op='+'|op='-'|op='*'|op='/';
+
+UnaryOp: op='++'|op='--';

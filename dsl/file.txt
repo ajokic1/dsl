@@ -1,11 +1,15 @@
 a=5;
 asdfasdf()sdfas;
 import java.io.*;
-if (a == 1) {
-    a = 3;
+if (a==1) {
+    a =3;
 }
 
-if (a > 2) {
+if (a> 2) {
     a--;
-    b = a + 5;
+b = a + 5;
+    if(b>c) {
+  a++;
+System.out.println("asdf");
+    }
 }

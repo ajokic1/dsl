@@ -58,6 +58,8 @@ def expression(config, node):
 def value(config, node_value):
     config.printer.append(node_value)
 
+def nospacing_operator(config, node):
+    value(config, node.op)
 
 def operator(config, node):
         config.printer.append(' ')

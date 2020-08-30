@@ -10,5 +10,9 @@ global:
         ;
     ;
 
-operators +, -, * :
-    spacing : 5
+operators <, >, <=, >=, ==, !=, +, -, *, /:
+    spacing : true
+    ;
+
+operators ++, -- :
+    spacing : false
