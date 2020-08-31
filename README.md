@@ -26,6 +26,7 @@ $ source venv/bin/activate
 Install the project dependencies:
 
 ```
+$ cd dsl
 $ pip install -r requirements.txt
 ```
 
