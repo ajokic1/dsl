@@ -1,17 +1,30 @@
-from textx import metamodel_from_file, metamodel_for_language, get_children_of_type, get_children
-from textx import metamodel_from_str
-from dsl.prettyprint import get_rules_from_model, pprint_to_string, pprint_to_file
-import re
+from textx import *
 from textx.export import model_export
+from prettyprint import *
+import re
 
 
-def create_model(path):
+def main():
+    rules_path = input("Rules file path: ")
+    rules_model = create_rules_model(rules_path)
+    analyze_rules_model(rules_model)
+
+    input_path = input("Input file path: ")
+    format_metamodel = metamodel_from_file('user_grammar.tx')
+    format_model = format_metamodel.model_from_file(input_path)
+    model_export(format_model, 'model.dot')
+
+    output_path = input("Output file path: ")
+    prettyprint(rules_model, format_model, output_path)
+
+
+def create_rules_model(path):
     metamodel = metamodel_from_file('grammar.tx')
     model = metamodel.model_from_file(path)
     return model
 
 
-def showDataFromModel(model):
+def analyze_rules_model(model):
     rules = model.rules
     formats = []
     operators = {'spacing': [], 'no_spacing': []}
@@ -82,27 +95,11 @@ def get_predefined_rules():
         return f.read()
 
 
-def selector(obj):
-    return True
-
-
 def prettyprint(rules_model, code_model, output):
     rules = get_rules_from_model(rules_model)
     result = pprint_to_file(output, code_model, rules)
     print(result)
-    # structure = code_model.statements[3].statement
-    # print(vars(structure))
 
 
 if __name__ == '__main__':
-    rules_path = input("Rules file path: ")
-    model = create_model(rules_path)
-    showDataFromModel(model)
-
-    input_path = input("Input file path: ")
-    format_metamodel = metamodel_from_file('user_grammar.tx')
-    format_model = format_metamodel.model_from_file('file.txt')
-    model_export(format_model, 'model.dot')
-
-    output_path = input("Output file path: ")
-    prettyprint(model, format_model, output_path)
+    main()

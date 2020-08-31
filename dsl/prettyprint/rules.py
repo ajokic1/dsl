@@ -20,6 +20,7 @@ def get_rules_from_model(model):
     rules[Rules.STRUCTURES] = structures
     return rules
 
+
 def process_rule(rule, rules, structures):
     if rule.__class__.__name__ == "StructureFormatRule":
         if rule.caption == "global":
