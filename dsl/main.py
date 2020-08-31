@@ -5,17 +5,41 @@ import re
 
 
 def main():
+    rules_model = handle_file_oserror(load_rules_file)
+    format_model = handle_file_oserror(load_input_file)
+    handle_file_oserror(create_output_file, rules_model, format_model)
+    
+
+def handle_file_oserror(callback, *args):
+    result = None
+    while True:
+        try:
+            result = callback(*args)
+            break
+        except OSError:
+            print ("Could not open/read file")
+            continue
+    return result
+
+
+def load_rules_file(*args):
     rules_path = input("Rules file path: ")
     rules_model = create_rules_model(rules_path)
     analyze_rules_model(rules_model)
+    return rules_model
 
+
+def load_input_file(*args):
     input_path = input("Input file path: ")
     format_metamodel = metamodel_from_file('user_grammar.tx')
     format_model = format_metamodel.model_from_file(input_path)
     model_export(format_model, 'model.dot')
+    return format_model
 
+
+def create_output_file(*args):
     output_path = input("Output file path: ")
-    prettyprint(rules_model, format_model, output_path)
+    prettyprint(*args, output_path)
 
 
 def create_rules_model(path):
